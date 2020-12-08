@@ -21,21 +21,17 @@ import java.io.File;
  * @ClassPath com.moko.support.log.LogModule
  */
 public class LogModule {
-    private static final String TAG = "mokoLog";
+    private static final String TAG = "mokoBeaconX";
     private static final String LOG_FOLDER = "mokoBeaconX";
+    private static final String LOG_FILE = "mokoBeaconX.txt";
     private static String PATH_LOGCAT;
 
     public static void init(Context context) {
         // 初始化Xlog
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            // 优先保存到SD卡中
-            PATH_LOGCAT = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + LOG_FOLDER;
-        } else {
-            // 如果SD卡不存在，就保存到本应用的目录下
-            PATH_LOGCAT = context.getFilesDir().getAbsolutePath() + File.separator + LOG_FOLDER;
-        }
+        PATH_LOGCAT = context.getFilesDir().getAbsolutePath() + File.separator + LOG_FOLDER;
+
         Printer filePrinter = new FilePrinter.Builder(PATH_LOGCAT)
-                .fileNameGenerator(new ChangelessFileNameGenerator(TAG))
+                .fileNameGenerator(new ChangelessFileNameGenerator(LOG_FILE))
                 .backupStrategy(new ClearLogBackStrategy())
                 .logFlattener(new PatternFlattener("{d yyyy-MM-dd HH:mm:ss} {l}/{t}: {m}"))
                 .build();
