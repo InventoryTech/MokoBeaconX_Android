@@ -39,12 +39,8 @@ public class LogModule {
                 .tag(TAG)
                 .logLevel(LogLevel.ALL)
                 .build();
-        try {
-            XLog.init(config, new AndroidPrinter(), filePrinter);
-        } catch (java.lang.IllegalStateException e) {
-            // This error occurs when XLog.init is called when XLog has already been initialised
-            // Catching it prevents the host app from crashing when restarting after backgrounding
-        }
+
+        XLog.init(config, new AndroidPrinter(), filePrinter);
     }
 
     public static void v(String msg) {
